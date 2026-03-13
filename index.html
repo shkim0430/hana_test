@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI-powered debt recovery strategy system for financial institutions. Analyze multi-debt repayment priority and move your loan to #1 with incentive-based strategies." />
+  <title>RepayFirst AI — Debt Recovery Strategy AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #070A12;
+      --bg2:#0B1024;
+      --card:#0E1533;
+      --card2:#0C132C;
+      --text:#EAF0FF;
+      --muted:#AAB6E8;
+      --faint:#7C88C7;
+      --stroke: rgba(255,255,255,.10);
+      --stroke2: rgba(255,255,255,.14);
+      --shadow: 0 22px 55px rgba(0,0,0,.55);
+      --shadow2: 0 12px 30px rgba(0,0,0,.40);
+      --radius: 18px;
+      --radius2: 14px;
+      --accent: #7C3AED; /* purple */
+      --accent2:#22D3EE; /* cyan */
+      --success:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --max: 1140px;
+      --pad: clamp(18px, 4vw, 34px);
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% 15%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(900px 700px at 85% 18%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(1000px 800px at 50% 95%, rgba(99,102,241,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      line-height: 1.55;
+      overflow-x:hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    ::selection{ background: rgba(124,58,237,.35); }
+
+    /* Layout helpers */
+    .container{
+      width: min(var(--max), calc(100% - (var(--pad) * 2)));
+      margin: 0 auto;
+    }
+    .section{
+      padding: clamp(54px, 8vw, 96px) 0;
+      position: relative;
+    }
+    .grid{
+      display:grid;
+      gap: clamp(14px, 2vw, 18px);
+    }
+    .stack{ display:flex; flex-direction: column; gap: 14px; }
+    .row{ display:flex; align-items:center; gap: 12px; flex-wrap: wrap; }
+
+    /* Typography */
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 7px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      font-weight: 600;
+      letter-spacing: .02em;
+      font-size: 13px;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(124,58,237,.12);
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.05; }
+    h1{
+      font-size: clamp(38px, 5.2vw, 64px);
+      letter-spacing: -0.03em;
+    }
+    h2{
+      font-size: clamp(28px, 3.4vw, 40px);
+      letter-spacing: -0.02em;
+    }
+    h3{
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    p{ margin: 0; color: var(--muted); }
+    .lead{
+      font-size: clamp(16px, 1.35vw, 19px);
+      color: rgba(234,240,255,.86);
+      max-width: 68ch;
+    }
+    .fine{
+      font-size: 13px;
+      color: rgba(170,182,232,.85);
+    }
+    .muted{ color: var(--muted); }
+
+    /* Top nav */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.78), rgba(7,10,18,.52));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      height: 72px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .logo{
+      width: 38px; height: 38px; border-radius: 12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.30), transparent 60%),
+        linear-gradient(135deg, rgba(124,58,237,1), rgba(34,211,238,1));
+      box-shadow: 0 12px 30px rgba(124,58,237,.25);
+      border: 1px solid rgba(255,255,255,.16);
+      position: relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute;
+      inset: -30%;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.35), transparent 45%);
+      transform: rotate(18deg);
+    }
+    .brand small{
+      display:block;
+      font-weight: 600;
+      color: rgba(170,182,232,.85);
+      letter-spacing: .01em;
+      font-size: 12px;
+      margin-top: 1px;
+    }
+
+    .nav-links{
+      display:flex;
+      gap: 18px;
+      align-items:center;
+    }
+    .nav-links a{
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(234,240,255,.84);
+      padding: 10px 10px;
+      border-radius: 12px;
+      transition: background .2s ease, color .2s ease;
+      outline: none;
+    }
+    .nav-links a:hover{ background: rgba(255,255,255,.06); }
+    .nav-ctas{ display:flex; gap: 10px; align-items:center; }
+
+    .mobile-toggle{
+      display:none;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 12px;
+      cursor:pointer;
+    }
+    .mobile-menu{
+      display:none;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 12px 0 16px;
+    }
+    .mobile-menu .grid{
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .mobile-menu a{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      font-weight: 700;
+    }
+    .mobile-menu a span{
+      color: rgba(170,182,232,.9);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(234,240,255,.92);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      cursor:pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.20);
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+    }
+    .btn:active{ transform: translateY(0px); }
+    .btn.primary{
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.85));
+      box-shadow: 0 18px 45px rgba(124,58,237,.22);
+    }
+    .btn.primary:hover{
+      box-shadow: 0 26px 65px rgba(124,58,237,.25);
+      filter: saturate(1.06);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.03);
+    }
+    .btn .arrow{
+      width: 18px; height: 18px;
+      opacity: .95;
+    }
+
+    /* Cards */
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(14,21,51,.82), rgba(11,16,36,.82));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position: relative;
+    }
+    .card:before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      background:
+        radial-gradient(600px 200px at 20% 0%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(500px 220px at 85% 10%, rgba(34,211,238,.14), transparent 65%);
+      opacity: .9;
+    }
+    .card-inner{ position: relative; padding: 18px; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(234,240,255,.90);
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .pill .mini{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+
+    /* Hero */
+    .hero{
+      padding: clamp(42px, 7vw, 84px) 0 clamp(34px, 5.5vw, 62px);
+    }
+    .hero-wrap{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: clamp(18px, 3vw, 26px);
+      align-items: stretch;
+    }
+    .hero-left{
+      padding: clamp(18px, 2.4vw, 26px);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(1000px 400px at 20% 0%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 420px at 90% 10%, rgba(34,211,238,.22), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+    .hero-left:after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(500px 180px at 55% -10%, rgba(255,255,255,.14), transparent 60%);
+      opacity: .7;
+    }
+    .hero-left > * { position: relative; }
+
+    .hero-bullets{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .bullet{
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      color: rgba(234,240,255,.92);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      font-size: 13px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .bullet svg{ flex: 0 0 auto; margin-top: 1px; }
+
+    .hero-ctas{ margin-top: 18px; display:flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-right{
+      display:flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .kpi{
+      padding: 16px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow:hidden;
+    }
+    .kpi:before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background:
+        radial-gradient(400px 250px at 20% 20%, rgba(124,58,237,.25), transparent 60%),
+        radial-gradient(450px 240px at 80% 30%, rgba(34,211,238,.18), transparent 65%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .kpi > * { position: relative; }
+    .kpi-title{ font-weight: 900; letter-spacing: -0.02em; font-size: 14px; color: rgba(234,240,255,.92); }
+    .kpi-value{ margin-top: 8px; font-weight: 900; font-size: 28px; letter-spacing: -0.03em; }
+    .kpi-sub{ margin-top: 6px; color: rgba(170,182,232,.92); font-size: 13px; }
+
+    .mini-panel{
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 16px;
+      box-shadow: var(--shadow2);
+    }
+    .mini-panel h3{ font-size: 15px; }
+    .mini-panel ul{ margin: 10px 0 0; padding-left: 18px; color: rgba(170,182,232,.92); }
+    .mini-panel li{ margin: 6px 0; }
+
+    /* Section headers */
+    .section-head{
+      display:flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .section-head .title-block{ max-width: 70ch; }
+    .section-head .title-block p{ margin-top: 10px; }
+
+    /* Problem / solution layout */
+    .two-col{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(14px, 2.4vw, 22px);
+      align-items: start;
+    }
+
+    .callout{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+    }
+    .callout strong{
+      display:block;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .callout .quote{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(234,240,255,.90);
+      font-weight: 700;
+    }
+
+    .order{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      margin-top: 14px;
+    }
+    .order h3{ font-size: 14px; margin-bottom: 8px; }
+    .order ol{ margin: 0; padding-left: 18px; color: rgba(170,182,232,.92); }
+    .order li{ margin: 6px 0; }
+
+    .limits{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .limit{
+      display:flex; gap: 10px; align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .limit .tag{
+      flex: 0 0 auto;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .02em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(239,68,68,.12);
+      border: 1px solid rgba(239,68,68,.22);
+      color: rgba(255,255,255,.92);
+    }
+    .limit p{ color: rgba(170,182,232,.92); font-size: 14px; margin-top: 1px; }
+
+    /* Feature cards */
+    .features{
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .feature{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow2);
+      transition: transform .18s ease, border-color .2s ease, background .2s ease;
+      position: relative;
+      overflow:hidden;
+    }
+    .feature:before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      opacity: 0;
+      background:
+        radial-gradient(550px 220px at 20% 0%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(500px 240px at 90% 10%, rgba(34,211,238,.16), transparent 60%);
+      transition: opacity .2s ease;
+    }
+    .feature:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+    }
+    .feature:hover:before{ opacity: 1; }
+    .feature > * { position: relative; }
+    .feature h3{ margin-top: 10px; }
+    .feature .meta{
+      margin-top: 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .kv{
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+    }
+    .kv b{
+      display:block;
+      font-size: 12px;
+      letter-spacing: .02em;
+      color: rgba(234,240,255,.92);
+      margin-bottom: 4px;
+    }
+    .kv span{ color: rgba(170,182,232,.92); font-size: 14px; }
+
+    /* How it works */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      position: relative;
+    }
+    .step{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow:hidden;
+    }
+    .step:before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      background: radial-gradient(400px 180px at 30% 0%, rgba(124,58,237,.16), transparent 60%);
+      opacity: .9;
+    }
+    .step > * { position: relative; }
+    .step .num{
+      width: 34px; height: 34px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: 12px;
+      font-weight: 900;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .step h3{ margin-top: 10px; }
+    .step p{ margin-top: 8px; color: rgba(170,182,232,.92); }
+
+    .connector{
+      position:absolute;
+      left: 4%;
+      right: 4%;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, rgba(124,58,237,.55), rgba(34,211,238,.45));
+      opacity: .38;
+      z-index: 0;
+      border-radius: 999px;
+    }
+
+    /* Social proof */
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .stat{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+    }
+    .stat .big{
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .stat .desc{ margin-top: 8px; color: rgba(170,182,232,.92); }
+
+    /* Form */
+    .form-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(14px, 2.4vw, 20px);
+      align-items: start;
+    }
+    form{
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+    }
+    .fields{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .field{ display:flex; flex-direction: column; gap: 8px; }
+    label{
+      font-size: 12px;
+      letter-spacing: .02em;
+      color: rgba(234,240,255,.86);
+      font-weight: 800;
+    }
+    input, select, textarea{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+      color: rgba(234,240,255,.92);
+    }
+    textarea{ resize: vertical; min-height: 110px; grid-column: 1 / -1; }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(34,211,238,.45);
+      box-shadow: 0 0 0 6px rgba(34,211,238,.10);
+      background: rgba(0,0,0,.26);
+    }
+    .form-actions{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .form-note{ color: rgba(170,182,232,.86); font-size: 12px; max-width: 52ch; }
+    .form-status{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(34,197,94,.22);
+      background: rgba(34,197,94,.10);
+      color: rgba(234,240,255,.92);
+      font-weight: 800;
+      display:none;
+    }
+    .form-status.error{
+      border-color: rgba(239,68,68,.25);
+      background: rgba(239,68,68,.10);
+    }
+    .form-status.show{ display:block; }
+
+    /* Final CTA */
+    .cta{
+      padding: clamp(24px, 3vw, 34px);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 340px at 90% 10%, rgba(34,211,238,.22), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .cta:after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background: radial-gradient(500px 180px at 50% -10%, rgba(255,255,255,.12), transparent 65%);
+      opacity: .75;
+    }
+    .cta > * { position: relative; }
+    .cta .row{ margin-top: 16px; }
+
+    /* Footer */
+    footer{
+      padding: 26px 0 42px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.06);
+    }
+    .footer-inner{
+      display:flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .footer-links{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items:center;
+      color: rgba(170,182,232,.86);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .footer-links a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .footer-links a:hover{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    /* Scroll animations */
+    .reveal{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-wrap{ grid-template-columns: 1fr; }
+      .hero-bullets{ grid-template-columns: 1fr; }
+      .two-col{ grid-template-columns: 1fr; }
+      .features{ grid-template-columns: repeat(2, 1fr); }
+      .steps{ grid-template-columns: 1fr 1fr; }
+      .connector{ display:none; }
+      .stats{ grid-template-columns: 1fr; }
+      .form-wrap{ grid-template-columns: 1fr; }
+      .fields{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px){
+      .nav-links{ display:none; }
+      .mobile-toggle{ display:inline-flex; }
+      .mobile-menu.open{ display:block; }
+      .features{ grid-template-columns: 1fr; }
+      .steps{ grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto !important; }
+      .btn, .feature, .reveal{ transition: none !important; }
+      .btn:hover{ transform: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav" aria-label="Primary navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="#top" data-scroll="#top" aria-label="Go to top">
+          <span class="logo" aria-hidden="true"></span>
+          <span>
+            RepayFirst AI
+            <small>Repayment Strategy AI for FIs</small>
+          </span>
+        </a>
+
+        <nav class="nav-links" aria-label="Sections">
+          <a href="#problem" data-scroll="#problem">Problem</a>
+          <a href="#solution" data-scroll="#solution">Solution</a>
+          <a href="#product" data-scroll="#product">Product</a>
+          <a href="#how" data-scroll="#how">How it works</a>
+          <a href="#beta" data-scroll="#beta">Beta</a>
+        </nav>
+
+        <div class="nav-ctas">
+          <button class="btn ghost" type="button" data-scroll="#beta">Join Beta</button>
+          <button class="btn primary" type="button" data-scroll="#beta" data-intent="demo">
+            Request Demo
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            Menu
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+        <div class="grid">
+          <a href="#problem" data-scroll="#problem">Problem <span>PAS</span></a>
+          <a href="#solution" data-scroll="#solution">Solution <span>Value</span></a>
+          <a href="#product" data-scroll="#product">Product <span>Features</span></a>
+          <a href="#how" data-scroll="#how">How it works <span>4 steps</span></a>
+          <a href="#beta" data-scroll="#beta">Join Beta <span>PoC</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO (Attention) -->
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-wrap">
+          <div class="hero-left reveal">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> AI-powered debt recovery strategy system</span>
+            <div style="margin-top:14px" class="stack">
+              <h1>Make borrowers repay <span style="background:linear-gradient(135deg, rgba(124,58,237,1), rgba(34,211,238,1)); -webkit-background-clip:text; background-clip:text; color:transparent;">YOUR loan</span> first</h1>
+              <p class="lead">AI analyzes multi-debt borrower repayment behavior and uses incentive-based strategies to move your loan to the <b style="color:rgba(234,240,255,.95)">#1 repayment priority</b>.</p>
+            </div>
+
+            <div class="hero-bullets" aria-label="Key benefits">
+              <div class="bullet">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7L10 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                AI repayment priority analysis
+              </div>
+              <div class="bullet">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7L10 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Interest incentive simulation
+              </div>
+              <div class="bullet">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 7L10 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Debt recovery optimization
+              </div>
+            </div>
+
+            <div class="hero-ctas">
+              <button class="btn primary" type="button" data-scroll="#beta" data-intent="demo">Request Demo</button>
+              <button class="btn" type="button" data-scroll="#beta" data-intent="beta">Join Beta Program</button>
+              <span class="fine">Built for banks, card issuers, capital companies, savings banks, and financial risk teams.</span>
+            </div>
+          </div>
+
+          <aside class="hero-right">
+            <div class="kpi reveal" aria-label="Outcome preview">
+              <div class="kpi-title">Repayment Priority Shift</div>
+              <div class="kpi-value">#3 → #1</div>
+              <div class="kpi-sub">Simulate incentives that move your institution to the top of the borrower’s repayment stack.</div>
+            </div>
+            <div class="mini-panel reveal" aria-label="What this is">
+              <span class="pill"><span class="mini" aria-hidden="true"></span> Not default prediction</span>
+              <h3 style="margin-top:10px">This is repayment strategy AI</h3>
+              <ul>
+                <li>Identify current repayment priority</li>
+                <li>Model incentive cost vs. recovery uplift</li>
+                <li>Recommend action paths by segment</li>
+              </ul>
+            </div>
+            <div class="mini-panel reveal" aria-label="Who it's for">
+              <span class="pill"><span class="mini" aria-hidden="true"></span> Built for risk & recovery</span>
+              <h3 style="margin-top:10px">For institutions with multi-debt exposure</h3>
+              <p class="muted" style="margin-top:8px">Create proactive incentives before delinquency, not reactive collections after default.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM (Problem / Agitation) -->
+    <section id="problem" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Problem</span>
+            <h2 style="margin-top:12px">The hidden problem in multi-debt lending</h2>
+            <p>Borrowers with multiple debts strategically choose which lender to repay first—based on pressure, negotiability, and perceived consequence. In that reality, many banks quietly become third priority, reducing recovery probability.</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="callout reveal">
+            <strong>Borrowers don’t just repay “what they can.” They repay what matters most.</strong>
+            <p>When cash is constrained, repayment becomes a prioritization game. The lender that wins priority wins recovery.</p>
+
+            <div class="order" aria-label="Typical repayment order example">
+              <h3>Typical repayment order example</h3>
+              <ol>
+                <li><b style="color:rgba(234,240,255,.95)">Most pressured lender</b></li>
+                <li><b style="color:rgba(234,240,255,.90)">Negotiable lender</b></li>
+                <li><b style="color:rgba(234,240,255,.82)">Low priority lender</b></li>
+              </ol>
+              <p class="fine" style="margin-top:10px">Banks often fall into “low priority” when incentives and pressure aren’t actively engineered.</p>
+            </div>
+          </div>
+
+          <div class="reveal">
+            <div class="callout">
+              <strong>Limits of current systems</strong>
+              <div class="limits" aria-label="Current system limitations">
+                <div class="limit">
+                  <span class="tag">DEFAULT</span>
+                  <div>
+                    <p><b style="color:rgba(234,240,255,.92)">Default prediction</b> tells you who might fail—after risk is already rising.</p>
+                  </div>
+                </div>
+                <div class="limit">
+                  <span class="tag">AFTER</span>
+                  <div>
+                    <p><b style="color:rgba(234,240,255,.92)">Post-default collection</b> reacts when the borrower’s repayment stack is already set.</p>
+                  </div>
+                </div>
+                <div class="limit">
+                  <span class="tag">ONE-SIZE</span>
+                  <div>
+                    <p><b style="color:rgba(234,240,255,.92)">Uniform restructuring</b> offers generic terms without modeling priority trade-offs.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quote" style="margin-top:14px">
+                Banks predict who will default<br/>
+                <span style="color:rgba(170,182,232,.92); font-weight:700;">But they cannot influence which lender gets repaid first</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section id="solution" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Solution</span>
+            <h2 style="margin-top:12px">AI-powered repayment strategy design</h2>
+            <p>Our system maps the borrower’s full multi-debt landscape, estimates current repayment priority, and simulates how much incentive is required to move <b style="color:rgba(234,240,255,.95)">your loan</b> to #1—before delinquency escalates.</p>
+          </div>
+          <div class="row">
+            <button class="btn primary" type="button" data-scroll="#beta" data-intent="strategy">Get strategy demo</button>
+            <button class="btn" type="button" data-scroll="#product">See features</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card reveal">
+            <div class="card-inner">
+              <span class="pill"><span class="mini" aria-hidden="true"></span> Inputs analyzed</span>
+              <div class="stack" style="margin-top:12px">
+                <div class="limit" style="background:rgba(0,0,0,.14)">
+                  <span class="tag" style="background:rgba(124,58,237,.14); border-color:rgba(124,58,237,.25)">DEBT</span>
+                  <div><p><b style="color:rgba(234,240,255,.92)">Debt structure</b>: product mix, installment schedules, revolving vs. term loans.</p></div>
+                </div>
+                <div class="limit" style="background:rgba(0,0,0,.14)">
+                  <span class="tag" style="background:rgba(34,211,238,.12); border-color:rgba(34,211,238,.22)">APR</span>
+                  <div><p><b style="color:rgba(234,240,255,.92)">Interest rates</b>: borrower sensitivity to cost and renegotiation leverage.</p></div>
+                </div>
+                <div class="limit" style="background:rgba(0,0,0,.14)">
+                  <span class="tag" style="background:rgba(99,102,241,.14); border-color:rgba(99,102,241,.24)">HISTORY</span>
+                  <div><p><b style="color:rgba(234,240,255,.92)">Repayment history</b>: timing, partial payments, delinquency trajectory.</p></div>
+                </div>
+                <div class="limit" style="background:rgba(0,0,0,.14)">
+                  <span class="tag" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.22)">FLOW</span>
+                  <div><p><b style="color:rgba(234,240,255,.92)">Transaction patterns</b>: cash-flow cadence, income stability, spend stress.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout reveal">
+            <strong>Key message</strong>
+            <div class="quote">
+              This is not just default prediction AI<br/>
+              <span style="color:rgba(170,182,232,.92); font-weight:800;">This is repayment strategy AI</span>
+            </div>
+            <p style="margin-top:12px">Instead of “who might default,” you get “what moves priority” — incentive levels, segments, and expected repayment shift.</p>
+            <div class="order" style="margin-top:14px">
+              <h3>Outputs you get</h3>
+              <ol>
+                <li>Current repayment priority score</li>
+                <li>Incentive-to-priority simulation curve</li>
+                <li>Optimized incentive recommendations</li>
+                <li>Ongoing monitoring for drift</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT VALUE -->
+    <section id="product" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Product value</span>
+            <h2 style="margin-top:12px">Turn incentives into repayment priority</h2>
+            <p>Designed for financial risk teams: segment-aware strategies that improve recovery odds by competing in the borrower’s repayment stack.</p>
+          </div>
+        </div>
+
+        <div class="grid features">
+          <article class="feature reveal">
+            <span class="pill"><span class="mini" aria-hidden="true"></span> Feature</span>
+            <h3>AI Repayment Behavior Analysis</h3>
+            <div class="meta">
+              <div class="kv"><b>Benefit</b><span>Understand multi-debt repayment preference and your current position.</span></div>
+              <div class="kv"><b>Impact</b><span>Prioritize outreach where priority-shift is realistically attainable.</span></div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <span class="pill"><span class="mini" aria-hidden="true"></span> Feature</span>
+            <h3>Interest Incentive Simulation</h3>
+            <div class="meta">
+              <div class="kv"><b>Benefit</b><span>Model “how much incentive” moves your loan up the stack.</span></div>
+              <div class="kv"><b>Impact</b><span>Reduce over-discounting while improving expected recovery.</span></div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <span class="pill"><span class="mini" aria-hidden="true"></span> Feature</span>
+            <h3>Incentive Optimization Engine</h3>
+            <div class="meta">
+              <div class="kv"><b>Benefit</b><span>Choose incentives by segment, budget, and recovery uplift targets.</span></div>
+              <div class="kv"><b>Impact</b><span>Allocate incentives to the highest ROI borrower cohorts.</span></div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <span class="pill"><span class="mini" aria-hidden="true"></span> Feature</span>
+            <h3>Repayment Behavior Monitoring</h3>
+            <div class="meta">
+              <div class="kv"><b>Benefit</b><span>Track whether incentives are shifting real payment behavior over time.</span></div>
+              <div class="kv"><b>Impact</b><span>Detect drift early and adjust strategies before delinquency spikes.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> How it works</span>
+            <h2 style="margin-top:12px">From data to priority shift in 4 steps</h2>
+            <p>Clear outputs, fast pilot setup, and an explainable path from borrower data to incentive strategy.</p>
+          </div>
+          <div class="row">
+            <button class="btn" type="button" data-scroll="#beta" data-intent="poc">Start PoC</button>
+          </div>
+        </div>
+
+        <div class="steps reveal" aria-label="4-step process">
+          <div class="connector" aria-hidden="true"></div>
+          <div class="step">
+            <span class="num">1</span>
+            <h3>Financial Data Analysis</h3>
+            <p>Ingest borrower debt structure, repayment timing, and signals from transaction patterns.</p>
+          </div>
+          <div class="step">
+            <span class="num">2</span>
+            <h3>Repayment Behavior Scoring</h3>
+            <p>Estimate the borrower’s repayment order and your institution’s current priority ranking.</p>
+          </div>
+          <div class="step">
+            <span class="num">3</span>
+            <h3>Incentive Simulation</h3>
+            <p>Simulate the incentive required to shift priority across cohorts and risk levels.</p>
+          </div>
+          <div class="step">
+            <span class="num">4</span>
+            <h3>Repayment Priority Shift</h3>
+            <p>Recommend optimized incentive strategies and track whether behavior actually changes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section id="scale" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Social proof</span>
+            <h2 style="margin-top:12px">The scale of the problem</h2>
+            <p>Multi-debt borrowers represent millions of accounts, elevated default risk, and massive inefficiency when institutions only act after delinquency. Priority-aware incentives let you recover proactively.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat reveal">
+            <div class="big">Millions</div>
+            <div class="desc">of multi-debt borrowers are actively ranking lenders every payday.</div>
+          </div>
+          <div class="stat reveal">
+            <div class="big">Higher risk</div>
+            <div class="desc">as repayment pressure concentrates on the “top priority” lender first.</div>
+          </div>
+          <div class="stat reveal">
+            <div class="big">Inefficient</div>
+            <div class="desc">collections when incentives aren’t tailored to how borrowers actually choose payments.</div>
+          </div>
+        </div>
+
+        <div class="callout reveal" style="margin-top:16px">
+          <strong>Key message</strong>
+          <div class="quote">
+            Most banks react after default<br/>
+            <span style="color:rgba(170,182,232,.92); font-weight:800;">This solution enables proactive recovery strategy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EARLY ACCESS / LEAD FORM -->
+    <section id="beta" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Early access</span>
+            <h2 style="margin-top:12px">Join the Financial Institution Beta Program</h2>
+            <p>We’re inviting financial institutions to participate in a PoC pilot program. You’ll get a strategy demo, a borrower repayment analysis report, and pilot insights to guide deployment.</p>
+          </div>
+        </div>
+
+        <div class="form-wrap">
+          <div class="callout reveal">
+            <strong>Beta participant benefits</strong>
+            <div class="limits" style="margin-top:12px">
+              <div class="limit" style="background:rgba(0,0,0,.14)">
+                <span class="tag" style="background:rgba(34,211,238,.12); border-color:rgba(34,211,238,.22)">DEMO</span>
+                <div><p><b style="color:rgba(234,240,255,.92)">AI recovery strategy demo</b> tailored to your portfolio goals.</p></div>
+              </div>
+              <div class="limit" style="background:rgba(0,0,0,.14)">
+                <span class="tag" style="background:rgba(124,58,237,.14); border-color:rgba(124,58,237,.25)">REPORT</span>
+                <div><p><b style="color:rgba(234,240,255,.92)">Repayment analysis report</b> highlighting priority drivers and segments.</p></div>
+              </div>
+              <div class="limit" style="background:rgba(0,0,0,.14)">
+                <span class="tag" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.22)">INSIGHTS</span>
+                <div><p><b style="color:rgba(234,240,255,.92)">Pilot insights</b> on incentive cost, uplift, and operational workflow.</p></div>
+              </div>
+            </div>
+            <p class="fine" style="margin-top:14px">For MVP validation: form submissions log to console and show a confirmation message (no page refresh).</p>
+          </div>
+
+          <form id="leadForm" class="reveal" novalidate>
+            <span class="pill"><span class="mini" aria-hidden="true"></span> Request access</span>
+            <h3 style="margin-top:10px">Get a demo + recovery strategy report</h3>
+            <p class="muted" style="margin-top:8px">Tell us your institution type and your role. We’ll respond with next steps for the pilot.</p>
+
+            <div class="fields">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" autocomplete="name" placeholder="Jane Kim" required />
+              </div>
+              <div class="field">
+                <label for="company">Company</label>
+                <input id="company" name="company" autocomplete="organization" placeholder="Hanaro Bank" required />
+              </div>
+              <div class="field">
+                <label for="title">Job Title</label>
+                <input id="title" name="jobTitle" autocomplete="organization-title" placeholder="Risk Strategy Lead" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@company.com" required />
+              </div>
+              <div class="field" style="grid-column:1 / -1">
+                <label for="institution">Institution Type</label>
+                <select id="institution" name="institutionType" required>
+                  <option value="" selected disabled>Select an institution type…</option>
+                  <option>Bank</option>
+                  <option>Credit Card Company</option>
+                  <option>Capital Company</option>
+                  <option>Savings Bank</option>
+                  <option>Financial Risk Team / Consultancy</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field" style="grid-column:1 / -1">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Share your recovery objectives, portfolio size, or which products are most affected by multi-debt priority…"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="form-note">
+                By submitting, you agree to be contacted about the beta program. No spam—only pilot coordination.
+              </div>
+              <button class="btn primary" type="submit">Submit</button>
+            </div>
+
+            <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta reveal">
+          <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Final CTA</span>
+          <h2 style="margin-top:12px">How many of your borrowers are repaying other lenders first?</h2>
+          <p class="lead" style="margin-top:10px">Find out using AI-driven repayment priority analysis.</p>
+          <div class="row">
+            <button class="btn primary" type="button" data-scroll="#beta" data-intent="demo">Request Demo</button>
+            <button class="btn" type="button" data-scroll="#beta" data-intent="report">Get Recovery Strategy Report</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="brand" aria-label="Footer brand">
+          <span class="logo" aria-hidden="true"></span>
+          <span>
+            RepayFirst AI
+            <small>Repayment Strategy AI for financial institutions</small>
+          </span>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+          <a href="#problem" data-scroll="#problem">Problem</a>
+          <a href="#solution" data-scroll="#solution">Solution</a>
+          <a href="#product" data-scroll="#product">Product</a>
+          <a href="#beta" data-scroll="#beta">Join Beta</a>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:14px">
+        © <span id="year"></span> RepayFirst AI. Market validation landing page. No external libraries.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // Smooth scrolling (works with sticky header)
+      const HEADER_OFFSET = 86;
+
+      function scrollToTarget(selector) {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+
+      function setIntent(intent) {
+        // Lightweight tracking: store last CTA intent for visibility in console logs.
+        if (!intent) return;
+        window.__leadIntent = intent;
+      }
+
+      document.addEventListener("click", (e) => {
+        const t = e.target.closest("[data-scroll]");
+        if (!t) return;
+        e.preventDefault();
+        const target = t.getAttribute("data-scroll");
+        const intent = t.getAttribute("data-intent");
+        setIntent(intent);
+        scrollToTarget(target);
+
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains("open")) {
+          mobileMenu.classList.remove("open");
+          mobileToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Mobile menu toggle
+      const mobileToggle = document.querySelector(".mobile-toggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.toggle("open");
+          mobileToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+
+      // Simple scroll-in reveal animations
+      const revealEls = Array.from(document.querySelectorAll(".reveal"));
+      const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!prefersReduced && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              io.unobserve(entry.target);
+            }
+          }
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => io.observe(el));
+      } else {
+        revealEls.forEach(el => el.classList.add("show"));
+      }
+
+      // Lead form submission handler (MVP validation)
+      const form = document.getElementById("leadForm");
+      const status = document.getElementById("formStatus");
+
+      function showStatus(message, isError) {
+        if (!status) return;
+        status.textContent = message;
+        status.classList.toggle("error", !!isError);
+        status.classList.add("show");
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+      }
+
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const data = Object.fromEntries(new FormData(form).entries());
+          const cleaned = {
+            name: String(data.name || "").trim(),
+            company: String(data.company || "").trim(),
+            jobTitle: String(data.jobTitle || "").trim(),
+            email: String(data.email || "").trim(),
+            institutionType: String(data.institutionType || "").trim(),
+            message: String(data.message || "").trim(),
+            intent: window.__leadIntent || "unknown",
+            submittedAt: new Date().toISOString()
+          };
+
+          // Basic validation
+          if (!cleaned.name || !cleaned.company || !cleaned.jobTitle || !cleaned.institutionType) {
+            showStatus("Please fill in all required fields (Name, Company, Job Title, Institution Type).", true);
+            return;
+          }
+          if (!validateEmail(cleaned.email)) {
+            showStatus("Please enter a valid email address.", true);
+            return;
+          }
+
+          // MVP: Log lead data to console
+          console.log("[Lead captured]", cleaned);
+
+          // UX: show confirmation message and reset form
+          showStatus("Thanks — your request was received. We’ll contact you shortly about the beta program.", false);
+          form.reset();
+          window.__leadIntent = "unknown";
+        });
+      }
+
+      // Footer year
+      const year = document.getElementById("year");
+      if (year) year.textContent = String(new Date().getFullYear());
+
+      // Optional: if the page loads with a hash, respect it with correct offset
+      if (location.hash && document.querySelector(location.hash)) {
+        setTimeout(() => scrollToTarget(location.hash), 50);
+      }
+    })();
+  </script>
+</body>
+</html>
+
