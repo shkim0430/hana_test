@@ -6,12 +6,12 @@
   <meta name="description" content="AI-powered debt recovery strategy system for financial institutions. Analyze multi-debt repayment priority and use incentive strategies to move your loan to #1 repayment priority." />
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
   <meta name="theme-color" content="#070A12" />
-  <title>RepayFirst AI ‚Äî AI Repayment Priority Strategy for Financial Institutions</title>
+  <title>RepayFirst AI ??AI Repayment Priority Strategy for Financial Institutions</title>
   <link rel="canonical" href="https://hana-test-two.vercel.app/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="RepayFirst AI ‚Äî Make borrowers repay your loan first" />
+  <meta property="og:title" content="RepayFirst AI ??Make borrowers repay your loan first" />
   <meta property="og:description" content="AI analyzes multi-debt borrower repayment behavior and designs incentive strategies to move your loan to #1 repayment priority." />
   <meta property="og:url" content="https://hana-test-two.vercel.app/" />
   <meta property="og:site_name" content="RepayFirst AI" />
@@ -21,7 +21,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="RepayFirst AI ‚Äî Make borrowers repay your loan first" />
+  <meta name="twitter:title" content="RepayFirst AI ??Make borrowers repay your loan first" />
   <meta name="twitter:description" content="AI repayment strategy system for banks, card companies, and financial institutions to move loans to #1 repayment priority." />
   <meta name="twitter:image" content="https://hana-test-two.vercel.app/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,17 @@
     gtag("js", new Date());
     gtag("config", "G-JV6JHZYDCN");
   </script>
-
+  <!-- Hotjar: replace 1234567 with your site ID -->
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj = h.hj || function(){ (h.hj.q = h.hj.q || []).push(arguments); };
+      h._hjSettings = { hjid: 1234567, hjsv: 6 };
+      a = o.getElementsByTagName("head")[0];
+      r = o.createElement("script"); r.async = 1;
+      r.src = "https://static.hotjar.com/c/hotjar-" + h._hjSettings.hjid + ".js?sv=" + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, null, null, null, null);
+  </script>
   <!-- Additional UX analytics script -->
   <script src="https://t.contentsquare.net/uxa/86c25b8e30565.js"></script>
 
@@ -620,7 +630,221 @@
       letter-spacing: -0.03em;
     }
     .stat .desc{ margin-top: 8px; color: rgba(170,182,232,.92); }
-
+    /* Mobile UI showcase */
+    .mobile-showcase{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(16px, 3vw, 26px);
+      align-items: center;
+    }
+    .mobile-copy{
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+    }
+    .mobile-copy .points{
+      margin: 14px 0 0;
+      padding: 0;
+      display:grid;
+      gap: 10px;
+      list-style: none;
+    }
+    .mobile-copy .points li{
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(234,240,255,.92);
+      font-weight: 600;
+    }
+    .phone{
+      width: min(360px, 100%);
+      margin: 0 auto;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 30px 70px rgba(0,0,0,.55);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone:before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      background:
+        radial-gradient(500px 180px at 20% 0%, rgba(124,58,237,.25), transparent 60%),
+        radial-gradient(420px 200px at 90% 8%, rgba(34,211,238,.18), transparent 65%);
+      opacity: .9;
+    }
+    .phone-inner{ position: relative; padding: 14px; }
+    .phone-notch{
+      width: 120px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.12);
+      margin: 6px auto 12px;
+    }
+    .phone-tabs{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: rgba(0,0,0,.2);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .tab-btn{
+      padding: 8px 6px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(170,182,232,.95);
+      font-weight: 800;
+      font-size: 12px;
+      cursor:pointer;
+      transition: background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .tab-btn.active{
+      background: rgba(255,255,255,.08);
+      color: rgba(234,240,255,.96);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .phone-panels{ margin-top: 12px; }
+    .phone-panel{
+      display:none;
+      animation: panelFade .25s ease;
+    }
+    .phone-panel.active{ display:block; }
+    @keyframes panelFade{
+      from{ opacity: 0; transform: translateY(4px); }
+      to{ opacity: 1; transform: translateY(0); }
+    }
+    .ui-card{
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.2);
+      box-shadow: 0 12px 26px rgba(0,0,0,.3);
+    }
+    .kpi-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .kpi-card{
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .kpi-card .label{ font-size: 11px; color: rgba(170,182,232,.9); font-weight: 700; }
+    .kpi-card .value{ font-size: 18px; font-weight: 900; margin-top: 4px; }
+    .kpi-card .delta{ font-size: 11px; color: rgba(124,58,237,.9); margin-top: 2px; }
+    .dist-row{
+      display:grid;
+      grid-template-columns: 52px 1fr 32px;
+      gap: 8px;
+      align-items:center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(234,240,255,.92);
+    }
+    .bar{
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+    .bar > span{
+      display:block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(124,58,237,.9), rgba(34,211,238,.85));
+    }
+    .debtor-head{
+      display:flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+    .debtor-name{ font-weight: 800; font-size: 14px; }
+    .chip{
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.92);
+    }
+    .debtor-meta{
+      display:flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: rgba(170,182,232,.92);
+    }
+    .debt-row{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .metric{
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .metric .label{ font-size: 10px; color: rgba(170,182,232,.85); font-weight: 700; }
+    .metric .value{ font-size: 16px; font-weight: 900; margin-top: 4px; }
+    .institution-list{ margin-top: 10px; display:grid; gap: 8px; }
+    .institution-row{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .7fr .5fr;
+      gap: 6px;
+      align-items:center;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      font-size: 11px;
+    }
+    .institution-row.highlight{
+      background: rgba(34,197,94,.12);
+      border-color: rgba(34,197,94,.22);
+    }
+    .rank-badge{
+      width: 20px; height: 20px;
+      border-radius: 8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+      font-size: 11px;
+      color: rgba(15,23,42,.95);
+      background: rgba(255,255,255,.85);
+    }
+    .sim-card{
+      display:grid;
+      gap: 8px;
+    }
+    .sim-line{
+      display:flex;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 12px;
+      color: rgba(234,240,255,.92);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
     /* Form */
     .form-wrap{
       display:grid;
@@ -762,6 +986,7 @@
       .hero-wrap{ grid-template-columns: 1fr; }
       .hero-bullets{ grid-template-columns: 1fr; }
       .two-col{ grid-template-columns: 1fr; }
+      .mobile-showcase{ grid-template-columns: 1fr; }
       .features{ grid-template-columns: repeat(2, 1fr); }
       .steps{ grid-template-columns: 1fr 1fr; }
       .connector{ display:none; }
@@ -800,6 +1025,7 @@
         <nav class="nav-links" aria-label="Sections">
           <a href="#problem" data-scroll="#problem">Problem</a>
           <a href="#solution" data-scroll="#solution">Solution</a>
+          <a href="#mobile" data-scroll="#mobile">Mobile UI</a>
           <a href="#product" data-scroll="#product">Product</a>
           <a href="#how" data-scroll="#how">How it works</a>
           <a href="#beta" data-scroll="#beta">Beta</a>
@@ -824,6 +1050,7 @@
         <div class="grid">
           <a href="#problem" data-scroll="#problem">Problem <span>PAS</span></a>
           <a href="#solution" data-scroll="#solution">Solution <span>Value</span></a>
+          <a href="#mobile" data-scroll="#mobile">Mobile UI <span>Story</span></a>
           <a href="#product" data-scroll="#product">Product <span>Features</span></a>
           <a href="#how" data-scroll="#how">How it works <span>4 steps</span></a>
           <a href="#beta" data-scroll="#beta">Join Beta <span>PoC</span></a>
@@ -875,8 +1102,8 @@
           <aside class="hero-right">
             <div class="kpi reveal" aria-label="Outcome preview">
               <div class="kpi-title">Repayment Priority Shift</div>
-              <div class="kpi-value">#3 ‚Üí #1</div>
-              <div class="kpi-sub">Simulate incentives that move your institution to the top of the borrower‚Äôs repayment stack.</div>
+              <div class="kpi-value">#3 ??#1</div>
+              <div class="kpi-sub">Simulate incentives that move your institution to the top of the borrower?ôs repayment stack.</div>
             </div>
             <div class="mini-panel reveal" aria-label="What this is">
               <span class="pill"><span class="mini" aria-hidden="true"></span> Not default prediction</span>
@@ -904,13 +1131,13 @@
           <div class="title-block">
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Problem</span>
             <h2 style="margin-top:12px">The hidden problem in multi-debt lending</h2>
-            <p>Borrowers with multiple debts strategically choose which lender to repay first‚Äîbased on pressure, negotiability, and perceived consequence. In that reality, many banks quietly become third priority, reducing recovery probability.</p>
+            <p>Borrowers with multiple debts strategically choose which lender to repay first?îbased on pressure, negotiability, and perceived consequence. In that reality, many banks quietly become third priority, reducing recovery probability.</p>
           </div>
         </div>
 
         <div class="two-col">
           <div class="callout reveal">
-            <strong>Borrowers don‚Äôt just repay ‚Äúwhat they can.‚Äù They repay what matters most.</strong>
+            <strong>Borrowers don?ôt just repay ?úwhat they can.??They repay what matters most.</strong>
             <p>When cash is constrained, repayment becomes a prioritization game. The lender that wins priority wins recovery.</p>
 
             <div class="order" aria-label="Typical repayment order example">
@@ -920,7 +1147,7 @@
                 <li><b style="color:rgba(234,240,255,.90)">Negotiable lender</b></li>
                 <li><b style="color:rgba(234,240,255,.82)">Low priority lender</b></li>
               </ol>
-              <p class="fine" style="margin-top:10px">Banks often fall into ‚Äúlow priority‚Äù when incentives and pressure aren‚Äôt actively engineered.</p>
+              <p class="fine" style="margin-top:10px">Banks often fall into ?úlow priority??when incentives and pressure aren?ôt actively engineered.</p>
             </div>
           </div>
 
@@ -931,13 +1158,13 @@
                 <div class="limit">
                   <span class="tag">DEFAULT</span>
                   <div>
-                    <p><b style="color:rgba(234,240,255,.92)">Default prediction</b> tells you who might fail‚Äîafter risk is already rising.</p>
+                    <p><b style="color:rgba(234,240,255,.92)">Default prediction</b> tells you who might fail?îafter risk is already rising.</p>
                   </div>
                 </div>
                 <div class="limit">
                   <span class="tag">AFTER</span>
                   <div>
-                    <p><b style="color:rgba(234,240,255,.92)">Post-default collection</b> reacts when the borrower‚Äôs repayment stack is already set.</p>
+                    <p><b style="color:rgba(234,240,255,.92)">Post-default collection</b> reacts when the borrower?ôs repayment stack is already set.</p>
                   </div>
                 </div>
                 <div class="limit">
@@ -965,7 +1192,7 @@
           <div class="title-block">
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Solution</span>
             <h2 style="margin-top:12px">AI-powered repayment strategy design</h2>
-            <p>Our system maps the borrower‚Äôs full multi-debt landscape, estimates current repayment priority, and simulates how much incentive is required to move <b style="color:rgba(234,240,255,.95)">your loan</b> to #1‚Äîbefore delinquency escalates.</p>
+            <p>Our system maps the borrower?ôs full multi-debt landscape, estimates current repayment priority, and simulates how much incentive is required to move <b style="color:rgba(234,240,255,.95)">your loan</b> to #1?îbefore delinquency escalates.</p>
           </div>
           <div class="row">
             <button class="btn primary" type="button" data-scroll="#beta" data-intent="strategy">Get strategy demo</button>
@@ -1004,7 +1231,7 @@
               This is not just default prediction AI<br/>
               <span style="color:rgba(170,182,232,.92); font-weight:800;">This is repayment strategy AI</span>
             </div>
-            <p style="margin-top:12px">Instead of ‚Äúwho might default,‚Äù you get ‚Äúwhat moves priority‚Äù ‚Äî incentive levels, segments, and expected repayment shift.</p>
+            <p style="margin-top:12px">Instead of ?úwho might default,??you get ?úwhat moves priority????incentive levels, segments, and expected repayment shift.</p>
             <div class="order" style="margin-top:14px">
               <h3>Outputs you get</h3>
               <ol>
@@ -1019,14 +1246,163 @@
       </div>
     </section>
 
-    <!-- PRODUCT VALUE -->
+    
+    <!-- MOBILE UI -->
+    <section id="mobile" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="title-block">
+            <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Mobile UI</span>
+            <h2 style="margin-top:12px">Mobile view that explains the data story</h2>
+            <p>Use the mobile cards to summarize portfolio health and drill into a single borrower without losing context.</p>
+          </div>
+          <div class="row">
+            <button class="btn" type="button" data-scroll="#beta">Get a walkthrough</button>
+          </div>
+        </div>
+
+        <div class="mobile-showcase">
+          <div class="mobile-copy reveal">
+            <h3>Two dashboard modes in one flow</h3>
+            <p class="muted" style="margin-top:8px">A short scroll explains the big picture first, then moves to borrower-level risk and institution debt rank.</p>
+            <ul class="points">
+              <li>√— ¬˜¡÷ ø‰æ‡ ¥ÎΩ√∫∏µÂ: ±‘∏, ø¨√º¿≤, ¡§ªÛ»≠¿≤, »∏ºˆ¿≤</li>
+              <li>∆Ø¡§ ¬˜¡÷ ªÛºº: √— √§π´, Ω≈øÎ¡°ºˆ, ±›¿∂±‚∞¸∫∞ √§π´ ªÛ≈¬</li>
+              <li>Ω√πƒ ≈«: ¿Œºæ∆º∫Í ¡∂¡§ Ω√ øÏº±º¯¿ß ∫Ø»≠ øπ√¯</li>
+            </ul>
+          </div>
+
+          <div class="phone card reveal" aria-label="Mobile UI mock">
+            <div class="phone-inner">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-tabs" role="tablist" aria-label="Mobile tabs">
+                <button class="tab-btn active" type="button" data-tab="dash" role="tab" aria-selected="true">¥ÎΩ√∫∏µÂ</button>
+                <button class="tab-btn" type="button" data-tab="borrower" role="tab" aria-selected="false">¬˜¡÷</button>
+                <button class="tab-btn" type="button" data-tab="sim" role="tab" aria-selected="false">Ω√πƒ</button>
+              </div>
+              <div class="phone-panels">
+                <div class="phone-panel active" data-panel="dash" role="tabpanel">
+                  <div class="kpi-grid">
+                    <div class="kpi-card">
+                      <div class="label">√— ¬˜¡÷ ºˆ</div>
+                      <div class="value">523</div>
+                      <div class="delta">+12∏Ì</div>
+                    </div>
+                    <div class="kpi-card">
+                      <div class="label">ø¨√º¿≤</div>
+                      <div class="value">12.3%</div>
+                      <div class="delta">-1.2%</div>
+                    </div>
+                    <div class="kpi-card">
+                      <div class="label">¡§ªÛ»≠¿≤</div>
+                      <div class="value">28.5%</div>
+                      <div class="delta">¡¯«‡¡ﬂ</div>
+                    </div>
+                    <div class="kpi-card">
+                      <div class="label">»∏ºˆ¿≤</div>
+                      <div class="value">+18.2%</div>
+                      <div class="delta">∞≥º±</div>
+                    </div>
+                  </div>
+                  <div class="ui-card" style="margin-top:10px">
+                    <div style="font-weight:800; font-size:13px;">øÏº±º¯¿ß ∫–∆˜</div>
+                    <div class="dist-row">
+                      <span>1º¯¿ß</span>
+                      <div class="bar"><span style="width:18%"></span></div>
+                      <span>18%</span>
+                    </div>
+                    <div class="dist-row">
+                      <span>2º¯¿ß</span>
+                      <div class="bar"><span style="width:35%"></span></div>
+                      <span>35%</span>
+                    </div>
+                    <div class="dist-row">
+                      <span>3º¯¿ß</span>
+                      <div class="bar"><span style="width:32%"></span></div>
+                      <span>32%</span>
+                    </div>
+                    <div class="dist-row">
+                      <span>4º¯¿ß</span>
+                      <div class="bar"><span style="width:15%"></span></div>
+                      <span>15%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="phone-panel" data-panel="borrower" role="tabpanel">
+                  <div class="ui-card">
+                    <div class="debtor-head">
+                      <div class="debtor-name">(¡÷)±›º”∫Œ«∞¡¶¡∂</div>
+                      <span class="chip">¡¶¡∂æ˜</span>
+                    </div>
+                    <div class="debtor-meta">
+                      <span>ªÁæ˜¿⁄: 12-3456-7890</span>
+                      <span>√÷±Ÿ 6∞≥ø˘: ø¨√º¿≤ 11.2%</span>
+                    </div>
+                    <div class="debt-row">
+                      <div class="metric">
+                        <div class="label">√— √§π´</div>
+                        <div class="value">\640M</div>
+                      </div>
+                      <div class="metric">
+                        <div class="label">Ω≈øÎ¡°ºˆ</div>
+                        <div class="value">620</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui-card" style="margin-top:10px">
+                    <div style="font-weight:800; font-size:13px;">±›¿∂±‚∞¸∫∞ √§π´</div>
+                    <div class="institution-list">
+                      <div class="institution-row">
+                        <span>«œ≥™</span>
+                        <span>\150M</span>
+                        <span>4.5%</span>
+                        <span class="rank-badge" style="background:#fca5a5;">1</span>
+                      </div>
+                      <div class="institution-row highlight">
+                        <span>øÏ∏Æ</span>
+                        <span>\150M</span>
+                        <span>3.5%</span>
+                        <span class="rank-badge" style="background:#fde68a;">2</span>
+                      </div>
+                      <div class="institution-row">
+                        <span>KB</span>
+                        <span>\160M</span>
+                        <span>3.8%</span>
+                        <span class="rank-badge" style="background:#fdba74;">3</span>
+                      </div>
+                      <div class="institution-row">
+                        <span>Ω≈«—</span>
+                        <span>\180M</span>
+                        <span>4.2%</span>
+                        <span class="rank-badge" style="background:#fecaca;">4</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="phone-panel" data-panel="sim" role="tabpanel">
+                  <div class="ui-card sim-card">
+                    <div style="font-weight:800; font-size:13px;">øÏº±º¯¿ß ¿Ãµø Ω√πƒ∑π¿Ãº«</div>
+                    <div class="sim-line"><span>«ˆ º¯¿ß</span><span>3º¯¿ß</span></div>
+                    <div class="sim-line"><span>∏Ò«• º¯¿ß</span><span>1º¯¿ß</span></div>
+                    <div class="sim-line"><span>¿Œºæ∆º∫Í ¡¶æ»</span><span>±›∏Æ -0.6%</span></div>
+                    <div class="sim-line"><span>øπªÛ »∏ºˆ¿≤</span><span>+12.4%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>\r\n    <!-- PRODUCT VALUE -->
     <section id="product" class="section">
       <div class="container">
         <div class="section-head reveal">
           <div class="title-block">
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Product value</span>
             <h2 style="margin-top:12px">Turn incentives into repayment priority</h2>
-            <p>Designed for financial risk teams: segment-aware strategies that improve recovery odds by competing in the borrower‚Äôs repayment stack.</p>
+            <p>Designed for financial risk teams: segment-aware strategies that improve recovery odds by competing in the borrower?ôs repayment stack.</p>
           </div>
         </div>
 
@@ -1044,7 +1420,7 @@
             <span class="pill"><span class="mini" aria-hidden="true"></span> Feature</span>
             <h3>Interest Incentive Simulation</h3>
             <div class="meta">
-              <div class="kv"><b>Benefit</b><span>Model ‚Äúhow much incentive‚Äù moves your loan up the stack.</span></div>
+              <div class="kv"><b>Benefit</b><span>Model ?úhow much incentive??moves your loan up the stack.</span></div>
               <div class="kv"><b>Impact</b><span>Reduce over-discounting while improving expected recovery.</span></div>
             </div>
           </article>
@@ -1094,7 +1470,7 @@
           <div class="step">
             <span class="num">2</span>
             <h3>Repayment Behavior Scoring</h3>
-            <p>Estimate the borrower‚Äôs repayment order and your institution‚Äôs current priority ranking.</p>
+            <p>Estimate the borrower?ôs repayment order and your institution?ôs current priority ranking.</p>
           </div>
           <div class="step">
             <span class="num">3</span>
@@ -1128,11 +1504,11 @@
           </div>
           <div class="stat reveal">
             <div class="big">Higher risk</div>
-            <div class="desc">as repayment pressure concentrates on the ‚Äútop priority‚Äù lender first.</div>
+            <div class="desc">as repayment pressure concentrates on the ?útop priority??lender first.</div>
           </div>
           <div class="stat reveal">
             <div class="big">Inefficient</div>
-            <div class="desc">collections when incentives aren‚Äôt tailored to how borrowers actually choose payments.</div>
+            <div class="desc">collections when incentives aren?ôt tailored to how borrowers actually choose payments.</div>
           </div>
         </div>
 
@@ -1153,7 +1529,7 @@
           <div class="title-block">
             <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Early access</span>
             <h2 style="margin-top:12px">Join the Financial Institution Beta Program</h2>
-            <p>We‚Äôre inviting financial institutions to participate in a PoC pilot program. You‚Äôll get a strategy demo, a borrower repayment analysis report, and pilot insights to guide deployment.</p>
+            <p>We?ôre inviting financial institutions to participate in a PoC pilot program. You?ôll get a strategy demo, a borrower repayment analysis report, and pilot insights to guide deployment.</p>
           </div>
         </div>
 
@@ -1180,7 +1556,7 @@
           <form id="leadForm" class="reveal" novalidate>
             <span class="pill"><span class="mini" aria-hidden="true"></span> Request access</span>
             <h3 style="margin-top:10px">Get a demo + recovery strategy report</h3>
-            <p class="muted" style="margin-top:8px">Tell us your institution type and your role. We‚Äôll respond with next steps for the pilot.</p>
+            <p class="muted" style="margin-top:8px">Tell us your institution type and your role. We?ôll respond with next steps for the pilot.</p>
 
             <div class="fields">
               <div class="field">
@@ -1202,7 +1578,7 @@
               <div class="field" style="grid-column:1 / -1">
                 <label for="institution">Institution Type</label>
                 <select id="institution" name="institutionType" required>
-                  <option value="" selected disabled>Select an institution type‚Ä¶</option>
+                  <option value="" selected disabled>Select an institution type??/option>
                   <option>Bank</option>
                   <option>Credit Card Company</option>
                   <option>Capital Company</option>
@@ -1213,13 +1589,13 @@
               </div>
               <div class="field" style="grid-column:1 / -1">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Share your recovery objectives, portfolio size, or which products are most affected by multi-debt priority‚Ä¶"></textarea>
+                <textarea id="message" name="message" placeholder="Share your recovery objectives, portfolio size, or which products are most affected by multi-debt priority??></textarea>
               </div>
             </div>
 
             <div class="form-actions">
               <div class="form-note">
-                By submitting, you agree to be contacted about the beta program. No spam‚Äîonly pilot coordination.
+                By submitting, you agree to be contacted about the beta program. No spam?îonly pilot coordination.
               </div>
               <button class="btn primary" type="submit">Submit</button>
             </div>
@@ -1259,6 +1635,7 @@
         <div class="footer-links" aria-label="Footer links">
           <a href="#problem" data-scroll="#problem">Problem</a>
           <a href="#solution" data-scroll="#solution">Solution</a>
+          <a href="#mobile" data-scroll="#mobile">Mobile UI</a>
           <a href="#product" data-scroll="#product">Product</a>
           <a href="#beta" data-scroll="#beta">Join Beta</a>
         </div>
@@ -1322,6 +1699,24 @@
         });
       }
 
+      // Mobile UI tabs
+      const tabButtons = Array.from(document.querySelectorAll(".phone-tabs .tab-btn"));
+      const tabPanels = Array.from(document.querySelectorAll(".phone-panel"));
+      if (tabButtons.length && tabPanels.length) {
+        tabButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const tab = btn.getAttribute("data-tab");
+            tabButtons.forEach((b) => {
+              const active = b === btn;
+              b.classList.toggle("active", active);
+              b.setAttribute("aria-selected", String(active));
+            });
+            tabPanels.forEach((panel) => {
+              panel.classList.toggle("active", panel.getAttribute("data-panel") === tab);
+            });
+          });
+        });
+      }
       // Simple scroll-in reveal animations
       const revealEls = Array.from(document.querySelectorAll(".reveal"));
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1394,7 +1789,7 @@
           }
 
           // UX: show confirmation message and reset form
-          showStatus("Thanks ‚Äî your request was received. We‚Äôll contact you shortly about the beta program.", false);
+          showStatus("Thanks ??your request was received. We?ôll contact you shortly about the beta program.", false);
           form.reset();
           window.__leadIntent = "unknown";
         });
