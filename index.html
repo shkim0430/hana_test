@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,7 +41,7 @@
     (function(h,o,t,j,a,r){
       h.hj = h.hj || function(){ (h.hj.q = h.hj.q || []).push(arguments); };
       h._hjSettings = { hjid: 1234567, hjsv: 6 };
-      a = o.getElementsByTag이름("head")[0];
+      a = o.getElementsByTagName("head")[0];
       r = o.createElement("script"); r.async = 1;
       r.src = "https://static.hotjar.com/c/hotjar-" + h._hjSettings.hjid + ".js?sv=" + h._hjSettings.hjsv;
       a.appendChild(r);
@@ -845,6 +845,17 @@
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
     }
+        .honeypot{
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px; height: 1px;
+      overflow: hidden;
+    }
+    .btn[disabled]{
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
     /* Form */
     .form-wrap{
       display:grid;
@@ -1015,10 +1026,10 @@
 </head>
 
 <body>
-  <header class="nav" aria-label="Primary navigation">
+  <header class="nav" aria-label="기본 내비게이션">
     <div class="container">
       <div class="nav-inner">
-        <a class="brand" href="#top" data-scroll="#top" aria-label="Go to top">
+        <a class="brand" href="#top" data-scroll="#top" aria-label="맨 위로">
           <span class="logo" aria-hidden="true"></span>
           <span>
             RepayFirst AI
@@ -1026,7 +1037,7 @@
           </span>
         </a>
 
-        <nav class="nav-links" aria-label="Sections">
+        <nav class="nav-links" aria-label="섹션">
           <a href="#problem" data-scroll="#problem">문제</a>
           <a href="#solution" data-scroll="#solution">해결</a>
           <a href="#mobile" data-scroll="#mobile">모바일 UI</a>
@@ -1050,7 +1061,7 @@
         </div>
       </div>
 
-      <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <div id="mobileMenu" class="mobile-menu" role="navigation" aria-label="모바일 내비게이션">
         <div class="grid">
           <a href="#problem" data-scroll="#problem">문제 <span>PAS</span></a>
           <a href="#solution" data-scroll="#solution">해결 <span>가치</span></a>
@@ -1104,12 +1115,12 @@
           </div>
 
           <aside class="hero-right">
-            <div class="kpi reveal" aria-label="Outcome preview">
+            <div class="kpi reveal" aria-label="성과 미리보기">
               <div class="kpi-title">상환 우선순위 이동</div>
               <div class="kpi-value">#3 → #1</div>
               <div class="kpi-sub">인센티브 시뮬레이션으로 우리 기관의 상환 우선순위를 끌어올립니다.</div>
             </div>
-            <div class="mini-panel reveal" aria-label="What this is">
+            <div class="mini-panel reveal" aria-label="요약">
               <span class="pill"><span class="mini" aria-hidden="true"></span> 단순 연체 예측이 아닙니다</span>
               <h3 style="margin-top:10px">상환 전략 AI입니다</h3>
               <ul>
@@ -1118,7 +1129,7 @@
                 <li>세그먼트별 실행 경로 추천</li>
               </ul>
             </div>
-            <div class="mini-panel reveal" aria-label="Who it's for">
+            <div class="mini-panel reveal" aria-label="대상">
               <span class="pill"><span class="mini" aria-hidden="true"></span> 리스크·회수팀 전용</span>
               <h3 style="margin-top:10px">복수채무 익스포저가 있는 기관을 위해</h3>
               <p class="muted" style="margin-top:8px">연체 이후의 사후 대응이 아니라, 연체 이전의 선제 인센티브 전략을 만듭니다.</p>
@@ -1158,7 +1169,7 @@
           <div class="reveal">
             <div class="callout">
               <strong>기존 시스템의 한계</strong>
-              <div class="limits" aria-label="Current system limitations">
+              <div class="limits" aria-label="기존 시스템 한계">
                 <div class="limit">
                   <span class="tag">DEFAULT</span>
                   <div>
@@ -1279,7 +1290,7 @@
           <div class="phone card reveal" aria-label="모바일 UI mock">
             <div class="phone-inner">
               <div class="phone-notch" aria-hidden="true"></div>
-              <div class="phone-tabs" role="tablist" aria-label="Mobile tabs">
+              <div class="phone-tabs" role="tablist" aria-label="모바일 탭">
                 <button class="tab-btn active" type="button" data-tab="dash" role="tab" aria-selected="true">대시보드</button>
                 <button class="tab-btn" type="button" data-tab="borrower" role="tab" aria-selected="false">차주</button>
                 <button class="tab-btn" type="button" data-tab="sim" role="tab" aria-selected="false">시뮬</button>
@@ -1466,7 +1477,7 @@
           </div>
         </div>
 
-        <div class="steps reveal" aria-label="4-step process">
+        <div class="steps reveal" aria-label="4단계 프로세스">
           <div class="connector" aria-hidden="true"></div>
           <div class="step">
             <span class="num">1</span>
@@ -1559,7 +1570,13 @@
             <p class="fine" style="margin-top:14px">MVP 기준: 제출 시 콘솔 로그 및 확인 메시지를 표시합니다.</p>
           </div>
 
-          <form id="leadForm" class="reveal" novalidate>
+          <form id="leadForm" class="reveal" novalidate action="https://formspree.io/f/xpqyrnqq" method="POST">
+            <input type="hidden" name="intent" id="intent" value="unknown" />
+            <input type="hidden" name="submittedAt" id="submittedAt" value="" />
+            <div class="honeypot" aria-hidden="true">
+              <label for="company_website">회사 웹사이트</label>
+              <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
             <span class="pill"><span class="mini" aria-hidden="true"></span> 접근 요청</span>
             <h3 style="margin-top:10px">데모 + 회수 전략 리포트 받기</h3>
             <p class="muted" style="margin-top:8px">기관 유형과 역할을 알려주시면 파일럿 진행 안내를 드립니다.</p>
@@ -1757,7 +1774,7 @@
       }
 
       if (form) {
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
           const data = Object.fromEntries(new FormData(form).entries());
@@ -1768,40 +1785,90 @@
             email: String(data.email || "").trim(),
             institutionType: String(data.institutionType || "").trim(),
             message: String(data.message || "").trim(),
-            intent: window.__leadIntent || "unknown",
-            submittedAt: new Date().toISOString()
+            intent: String(data.intent || window.__leadIntent || "unknown"),
+            submittedAt: new Date().toISOString(),
+            company_website: String(data.company_website || "").trim()
           };
 
-          // Basic validation
           if (!cleaned.name || !cleaned.company || !cleaned.jobTitle || !cleaned.institutionType) {
-            showStatus("Please fill in all required fields (이름, 회사, 직함, 기관 유형).", true);
+            showStatus("필수 항목을 모두 입력해 주세요 (이름, 회사, 직함, 기관 유형).", true);
             return;
           }
           if (!validateEmail(cleaned.email)) {
-            showStatus("Please enter a valid email address.", true);
+            showStatus("유효한 이메일 주소를 입력해 주세요.", true);
             return;
           }
 
-          // MVP: Log lead data to console
-          console.log("[Lead captured]", cleaned);
-
-          // Analytics: lead submit event
-          if (typeof window.gtag === "function") {
-            window.gtag("event", "lead_submit", {
-              event_category: "lead",
-              event_label: cleaned.intent || "unknown",
-              institution_type: cleaned.institutionType,
-              job_title: cleaned.jobTitle
-            });
+          if (cleaned.company_website) {
+            showStatus("전송에 실패했습니다. 잠시 후 다시 시도해 주세요.", true);
+            return;
           }
 
-          // UX: show confirmation message and reset form
-          showStatus("접수가 완료되었습니다. 베타 프로그램 관련해서 곧 연락드리겠습니다.", false);
-          form.reset();
-          window.__leadIntent = "unknown";
+          const submitBtn = form.querySelector("button[type=\"submit\"]");
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.dataset.originalText = submitBtn.textContent.trim();
+            submitBtn.textContent = "전송 중...";
+          }
+
+          const payload = {
+            name: cleaned.name,
+            company: cleaned.company,
+            jobTitle: cleaned.jobTitle,
+            email: cleaned.email,
+            institutionType: cleaned.institutionType,
+            message: cleaned.message,
+            intent: cleaned.intent,
+            submittedAt: cleaned.submittedAt
+          };
+
+          try {
+            const res = await fetch(form.action, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+              throw new Error("formspree_error");
+            }
+
+            if (typeof window.gtag === "function") {
+              window.gtag("event", "lead_submit", {
+                event_category: "lead",
+                event_label: cleaned.intent || "unknown",
+                institution_type: cleaned.institutionType,
+                job_title: cleaned.jobTitle
+              });
+            }
+            if (typeof window.hj === "function") {
+              window.hj("event", "lead_submit");
+            }
+
+            showStatus("접수가 완료되었습니다. 곧 연락드리겠습니다.", false);
+            form.reset();
+            window.__leadIntent = "unknown";
+            const intentField = document.getElementById("intent");
+            if (intentField) intentField.value = "unknown";
+          } catch (err) {
+            if (typeof window.gtag === "function") {
+              window.gtag("event", "lead_submit_error", { event_category: "lead" });
+            }
+            if (typeof window.hj === "function") {
+              window.hj("event", "lead_submit_error");
+            }
+            showStatus("전송에 실패했습니다. 잠시 후 다시 시도해 주세요.", true);
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = submitBtn.dataset.originalText || "제출";
+            }
+          }
         });
       }
-
       // Footer year
       const year = document.getElementById("year");
       if (year) year.textContent = String(new Date().getFullYear());
