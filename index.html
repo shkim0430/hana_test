@@ -972,11 +972,15 @@
 
     /* Scroll animations */
     .reveal{
+      opacity: 1;
+      transform: none;
+    }
+    .js .reveal{
       opacity: 0;
       transform: translateY(10px);
       transition: opacity .5s ease, transform .5s ease;
     }
-    .reveal.show{
+    .js .reveal.show{
       opacity: 1;
       transform: translateY(0);
     }
@@ -1648,6 +1652,7 @@
 
   <script>
     (function () {
+      document.documentElement.classList.add('js');
       // Smooth scrolling (works with sticky header)
       const HEADER_OFFSET = 86;
 
