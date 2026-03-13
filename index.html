@@ -9,6 +9,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- GA4: configured with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV6JHZYDCN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-JV6JHZYDCN");
+  </script>
+
+  <!-- Additional UX analytics script -->
+  <script src="https://t.contentsquare.net/uxa/86c25b8e30565.js"></script>
+
   <style>
     :root{
       --bg: #070A12;
@@ -1265,6 +1277,15 @@
         setIntent(intent);
         scrollToTarget(target);
 
+        // Analytics: CTA click event
+        const label = intent || t.textContent.trim() || "cta_click";
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "cta_click", {
+            event_category: "engagement",
+            event_label: label
+          });
+        }
+
         // Close mobile menu if open
         if (mobileMenu.classList.contains("open")) {
           mobileMenu.classList.remove("open");
@@ -1342,6 +1363,16 @@
 
           // MVP: Log lead data to console
           console.log("[Lead captured]", cleaned);
+
+          // Analytics: lead submit event
+          if (typeof window.gtag === "function") {
+            window.gtag("event", "lead_submit", {
+              event_category: "lead",
+              event_label: cleaned.intent || "unknown",
+              institution_type: cleaned.institutionType,
+              job_title: cleaned.jobTitle
+            });
+          }
 
           // UX: show confirmation message and reset form
           showStatus("Thanks — your request was received. We’ll contact you shortly about the beta program.", false);
